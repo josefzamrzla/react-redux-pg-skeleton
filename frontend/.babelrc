@@ -1,0 +1,9 @@
+{
+  "presets": ["react", "env", "stage-0"],
+  "plugins": [
+    "transform-class-properties",
+    "add-module-exports",
+    "transform-react-jsx-img-import",
+    ["transform-runtime", { "polyfill": false, "regenerator": true }]
+  ]
+}

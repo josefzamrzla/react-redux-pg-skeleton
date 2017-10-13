@@ -1,0 +1,15 @@
+version: "2.1"
+
+services:
+  app:
+    image: josefzamrzla/react-redux-skeleton--api:${APP_REVISION:-latest}
+    container_name: react-redux-skeleton-api
+    restart: always
+    env_file: .env
+    build:
+      context: .
+      args:
+        - http_proxy=${http_proxy}
+        - no_proxy=${no_proxy}
+    volumes:
+      - ./uploads:/usr/src/app/uploads

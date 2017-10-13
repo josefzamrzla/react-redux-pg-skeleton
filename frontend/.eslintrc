@@ -1,0 +1,39 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "extends": "eslint-config-airbnb",
+  "rules": {
+    "max-len": 0,
+    "comma-dangle": 0,
+    "no-underscore-dangle": 0,
+    "react/prefer-stateless-function": 0, // react-transform-hmr cannot HMR functional components
+    "react/prop-types": [2, {"ignore": ["route", "children"]}],
+    "jsx-a11y/no-static-element-interactions": 1,
+    "jsx-a11y/anchor-has-content": 1
+  },
+  "plugins": ["react"],
+  "globals": {
+    "__CLIENT__": true,
+    "__SERVER__": true,
+    "__DEVELOPMENT__": true,
+    "window": true,
+    "document": true,
+    "process": true
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "./webpack.config.js"
+      }
+    }
+  }
+}

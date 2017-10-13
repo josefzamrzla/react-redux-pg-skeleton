@@ -1,0 +1,62 @@
+#!/bin/bash
+
+set -e
+
+revision=$(git rev-parse HEAD)
+
+cd `dirname $0`
+
+case "$1" in
+
+start)
+    if [ -n "$2" ]; then
+       revision=$2
+    fi
+
+    APP_REVISION=$revision docker-compose up -d
+    ;;
+
+stop)
+    docker-compose down
+    ;;
+
+restart)
+    ./dockerctl stop
+    ./dockerctl start
+    ;;
+
+build)
+    APP_REVISION=$revision docker-compose build app
+    ;;
+
+bash)
+    docker-compose exec app bash
+    ;;
+
+logs)
+  docker-compose logs -f app
+  ;;
+
+upgrade)
+    if [ "$(whoami)" != "docker" ]; then
+       echo "Only docker user is allowed to run upgrade";
+       exit;
+    fi
+
+    umask 002
+    git reset --hard
+    git pull
+
+    if [ -n "$2" ]; then
+       git reset --hard $2
+    fi
+
+    ./dockerctl build
+    ./dockerctl stop
+    ./dockerctl start
+    ;;
+
+*)
+    echo "Usage: $0 start|stop|restart|build|bash|upgrade"
+    ;;
+esac
